@@ -28,10 +28,8 @@ namespace HU
         {
             services.AddCors();
 
-            var connection =
-                @"Server=DESKTOP-24JC6T2\SQLEXPRESS;Database=HistoryUniversity;User=DESKTOP-24JC6T2\Oksana;Trusted_Connection=True;ConnectRetryCount=0";
             services.AddDbContext<HistoryContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(Configuration.GetConnectionString("HistoryUniversityDatabase")));
 
 
             services.AddAuthentication(x =>
