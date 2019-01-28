@@ -1,0 +1,14 @@
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\HUDLL.deps.json
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\HUDLL.dll
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\HUDLL.pdb
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\Microsoft.IdentityModel.Tokens.xml
+C:\Users\Oksana\source\repos\HU\HUDLL\bin\Debug\netcoreapp2.1\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.csprojAssemblyReference.cache
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.csproj.CoreCompileInputs.cache
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.AssemblyInfoInputs.cache
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.AssemblyInfo.cs
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.csproj.CopyComplete
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.dll
+C:\Users\Oksana\source\repos\HU\HUDLL\obj\Debug\netcoreapp2.1\HUDLL.pdb

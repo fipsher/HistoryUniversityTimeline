@@ -1,0 +1,64 @@
+﻿@using NonFactors.Mvc.Grid
+@model HU.Models.AdminEventTypesViewModel
+
+<script>
+    $(function () {
+        $('.modal-open').click(function () {
+            var url = $(this).attr('href');
+            $.get(url, function (data) {
+                $('.modal-content').html(data);
+                $('.modal').modal('show');
+            });
+
+            return false;
+        });
+
+        $('.delete-eventType').click(function () {
+            $.ajax({
+                type: "GET",
+                url: $(this).attr("href"),
+                data: $(this).serialize(),
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    }
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+
+@Html.Partial("AdminMenu")
+<div class="container">
+    @Html.Partial("Modal")
+    <div>
+        @(Html
+              .Grid(Model.EventTypes)
+              .Build(columns =>
+              {
+                  columns.Add(model => model.EventTypeName).Titled("Тип події").Css("table-cell");
+                  columns.Add().Encoded(false)
+                      .RenderedAs(o => (
+                          Html.ActionLink("Редагувати", "UpdateEventType", "Admin", new { eventTypeId = o.EventTypeId }, new { @class = "btn btn-default modal-open"})
+                          )
+                      ).Css("table-cell");
+                  ;
+                  columns.Add().Encoded(false)
+                      .RenderedAs(o => (
+                          Html.ActionLink("Видалити", "DeleteEventType", "Admin", new { eventTypeId = o.EventTypeId }, new { @class = "btn btn-default delete-eventType" })
+                          )
+                      ).Css("table-cell");
+                  ;
+              })
+              .Empty("Даних не знайдено")
+              .Filterable()
+              .Pageable(pager =>
+              {
+                  pager.RowsPerPage = 10;
+              }))
+    </div>
+
+    @Html.ActionLink("Додати тип події", "UpdateEventType", "Admin", new { }, new { @class = "btn btn-primary modal-open" })
+</div>

@@ -1,0 +1,52 @@
+﻿@model HU.Models.EventTypeViewModel
+
+<script>
+    $(document).ready(function () {
+        $("#UpdateEventTypeForm").submit(function () {
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: $(this).serialize(),
+                success: function (res) {
+                    if (res.success) {
+                        $(".close").click();
+                        location.reload();
+                    }
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data", id="UpdateEventTypeForm"}))
+{
+    @Html.HiddenFor(m => m.EventTypeId)
+    <!-- Modal Header -->
+    <div class="modal-header" style="background-color: #d9edf7">
+        <h5 class="modal-title" id="modal-title"></h5>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="col-md-4 control-label">
+                Тип події
+                @Html.ValidationMessageFor(model => model.EventTypeName)
+            </label>
+            <div class="col-md-8">
+                @Html.TextBoxFor(model => model.EventTypeName, new {@class = "input-md  textinput textInput form-control"})
+            </div>
+
+
+        </div>
+      
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-info">Зберегти</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрити</button>
+    </div>
+}

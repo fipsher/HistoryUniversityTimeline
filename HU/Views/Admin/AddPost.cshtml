@@ -1,0 +1,140 @@
+﻿@model HU.Models.UpdatePostViewModel
+
+@{
+    Model.EventTypes = Model.EventTypes ?? new List<SelectListItem>();
+    Model.FigureTypes = Model.FigureTypes ?? new List<SelectListItem>();
+    Model.PeriodsList = Model.PeriodsList ?? new List<SelectListItem>();
+}
+
+<script>
+    $(document).ready(function () {
+        $("#AddPostForm").submit(function () {
+
+            var form = $(this)[0];           
+            var data = new FormData(form);
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("action"),
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.success) {
+                        $(".close").click();
+                        location.reload();
+                    }
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new {enctype = "multipart/form-data", id = "AddPostForm"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.PeriodsList)
+
+    <div class="modal-header" style="background-color: #d9edf7">                 
+        <div class="panel-title">Додати пост</div>                
+    </div>
+
+    <div class="modal-body">
+        <div class="mainbox">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Заголовок
+                            @Html.ValidationMessageFor(model => model.Title)
+                        </label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Title, new {@class = "input-md  textinput textInput form-control"})
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Контент
+                        </label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.Content, new {@class = "input-md  textinput textInput form-control", style = "height:300px"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Дата події
+                            @Html.ValidationMessageFor(model => model.PostDate)
+                        </label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.PostDate, new {@class = "input-md  textinput textInput form-control"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Період
+                            @Html.ValidationMessageFor(model => model.SelectedPeriodId)
+                        </label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.SelectedPeriodId,
+                                Model.PeriodsList,
+                                "Вибрати період",
+                                new {@class = "form-control"})
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Тип події
+                        </label>
+                        @foreach (var item in Model.EventTypes)
+                        {
+                            <div class="controls col-md-offset-4 col-md-8  checkbox">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="input-ms checkboxinput"
+                                           name="SelectedEventTypes"
+                                           value="@item.Value"/> @item.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-md-4 control-label">
+                            Тип постаті
+                        </label>
+                        @foreach (var item in Model.FigureTypes)
+                        {
+                            <div class="controls col-md-offset-4 col-md-8  checkbox">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="input-ms checkboxinput"
+                                           name="SelectedFigureTypes"
+                                           value="@item.Value"/> @item.Text
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Медіадані
+                            @Html.ValidationMessageFor(model => model.Image)
+                        </label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Image, new {type = "file"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-default">Зберегти</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрити</button>
+    </div>
+}

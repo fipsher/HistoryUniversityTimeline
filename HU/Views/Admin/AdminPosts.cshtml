@@ -1,0 +1,72 @@
+﻿@using HUDLL.ViewModels
+@using NonFactors.Mvc.Grid
+@model HU.Models.AdminPostsListViewModel
+
+@{
+    Model.AdminPosts = Model.AdminPosts ?? new List<PostViewModel>();
+}
+
+<script>
+    $(function () {
+        $('.modal-open').click(function () {
+            var url = $(this).attr('href');
+            $.get(url, function (data) {
+                $('.modal-content').html(data);
+                $('.modal').modal('show');
+            });
+
+            return false;
+        });
+
+        $('.delete-post').click(function () {
+            $.ajax({
+                type: "GET",
+                url: $(this).attr("href"),
+                data: $(this).serialize(),
+                success: function (res) {
+                    if (res.success) {
+                        location.reload();
+                    }
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+
+@Html.Partial("AdminMenu")
+<div class="container">
+    @Html.Partial("Modal")
+    <div>
+        @(Html
+              .Grid(Model.AdminPosts)
+              .Build(columns =>
+              {
+                  columns.Add(model => model.Title).Titled("Заголовок").Css("table-cell");
+                  columns.Add(model => model.PostDate).Titled("Дата").Css("table-cell");
+                  columns.Add(model => model.PeriodName).Titled("Період").Css("table-cell");
+                  columns.Add().Encoded(false)
+                      .RenderedAs(o => (
+                          Html.ActionLink("Редагувати", "UpdatePost", "Admin", new { postId = o.PostId }, new { @class = "btn btn-default modal-open" })
+                          )
+                      ).Css("table-cell");
+                  ;
+                  columns.Add().Encoded(false)
+                      .RenderedAs(o => (
+                          Html.ActionLink("Видалити", "DeletePost", "Admin", new { postId = o.PostId }, new { @class = "btn btn-default delete-post",  })
+                          )
+                      ).Css("table-cell");
+                  ;
+              })
+              .Empty("Даних не знайдено")
+              .Filterable()
+              .Pageable(pager =>
+              {
+                  pager.RowsPerPage = 10;
+              }))
+        
+    </div>
+
+        @Html.ActionLink("Додати пост", "Addpost", "Admin", new { }, new { @class = "btn btn-primary modal-open" })
+</div>
